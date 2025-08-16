@@ -1,0 +1,23 @@
+import 'dart:convert';
+
+import 'package:ai_mobile/api/apiPath.dart';
+import 'package:http/http.dart' as http;
+
+class CategoryApi {
+  static Future<List<dynamic>?> getCategory() async {
+    try {
+      final url = Uri.parse(ApiPath.getCategoryAll);
+      final respose = await http.get(url);
+      print(respose.body);
+      if (respose.statusCode == 200) {
+        final data = jsonDecode(respose.body);
+        return data['data'];
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+}
