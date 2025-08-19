@@ -1,6 +1,7 @@
 import 'package:ai_mobile/components/hive_database.dart';
 import 'package:ai_mobile/components/messageHepler.dart';
 import 'package:ai_mobile/page/auth/login_page.dart';
+import 'package:ai_mobile/page/cart/cart_page.dart';
 import 'package:ai_mobile/page/homework/widget/bottomHomwork.dart';
 import 'package:ai_mobile/provider/auth_provider.dart';
 import 'package:ai_mobile/provider/banner_provider.dart';
@@ -30,7 +31,7 @@ void main() async {
           create: (_) => CategoryProvider()..getCategory(),
         ),
         ChangeNotifierProvider(create: (_) => ProductProvider()..getProduct()),
-        ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()..getCart()),
       ],
       child: MyApp(),
     ),
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: NavService.navigatorKey,
       scaffoldMessengerKey: MessageHelper.scaffoldMessagerKey,
       initialRoute: RouterPath.login,
+      //home: CartPage(),
       onGenerateRoute: RouterPath.generateRoute,
     );
   }
