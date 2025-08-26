@@ -1,4 +1,5 @@
 import 'package:ai_mobile/page/cart/widget/cart_item.dart';
+import 'package:ai_mobile/page/payment/payment.dart';
 import 'package:ai_mobile/provider/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_ce_flutter/adapters.dart';
@@ -74,6 +75,9 @@ class _CartPageState extends State<CartPage> {
       ),
       bottomNavigationBar: Consumer<CartProvider>(
         builder: (context, cart, child) {
+          if(cart.carts.length == 0){
+            return SizedBox();
+          }
           return Container(
             height: 140,
             //decoration: BoxDecoration(color: Colors.red),
@@ -109,6 +113,12 @@ class _CartPageState extends State<CartPage> {
                       child: GestureDetector(
                         onTap: () {
                           //cart.deleteCart();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PaymentPage(),
+                            ),
+                          );
                         },
                         child: Container(
                           height: 50,

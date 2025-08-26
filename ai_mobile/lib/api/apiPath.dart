@@ -1,6 +1,5 @@
 class ApiPath {
-  static const String baseUrl =
-      "https://node-server-api-q7vr.onrender.com/api/v1";
+  static const String baseUrl = "https://mobile.homefind.la/api/v1";
   //------- Auth -----
   static const String login = "${baseUrl}/user/login";
   static const String register = "${baseUrl}/user/register";
@@ -23,4 +22,9 @@ class ApiPath {
   static const String getOrderByUser = "${baseUrl}/order/user";
   //----- history ----
   static const String getHistoryByUser = "${baseUrl}/history/user/";
+  // ----- address ---
+  static const String createAddress = "${baseUrl}/address/create";
+  static const String updateAddress = "${baseUrl}/address/update/";
+  static const String deleteAddress = "${baseUrl}/address/delete/";
+  static const String getAddressByUser = "${baseUrl}/address/getByUser";
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:hive_ce/hive.dart';
 
 class HiveDatabase {
@@ -17,6 +19,35 @@ class HiveDatabase {
       rethrow;
     }
   }
+   static Future<bool> deleteToken() async {
+    final userBox = await box!.openBox<Map>('auth');
+    await userBox.deleteAll(['tokens']);
+
+    return true;
+  }
+  static Future<bool> saveToken({
+    required String token,
+    required String refresh,
+  }) async {
+    final userBox = await box!.openBox<Map>('auth');
+
+    await userBox.put("tokens", {"token": token, "refreshToken": refresh});
+    return true;
+  }
+
+  static Future<dynamic> getAddress() async {
+    final userBox = await box!.openBox<Map>('auth');
+    final data = await userBox.getAll(['tokens']);
+
+    return data[0];
+  }
+
+  static Future<dynamic> getToken() async {
+    final userBox = await box!.openBox<Map>('auth');
+    final data = await userBox.getAll(['tokens']);
+
+    return data[0];
+  }
 
   static Future<bool> deleteCartsAll() async {
     try {
@@ -27,6 +58,14 @@ class HiveDatabase {
     } catch (e) {
       return false;
     }
+  }
+
+  static Future<dynamic> getProfile() async {
+    final userBox = await box!.openBox<Map>('auth');
+    final data = await userBox.getAll(['profile']);
+    final respone = jsonDecode(data[0]!['data']);
+    print("====>${respone}");
+    return respone;
   }
 
   static Future<List<dynamic>?> getCarts() async {
@@ -51,25 +90,28 @@ class HiveDatabase {
       final existIndex = cartBox.values.toList().indexWhere(
         (item) => item['_id'] == cart['_id'],
       );
-      final existing = Map<String, dynamic>.from(cartBox.getAt(existIndex)!);
-      print("=====>${existing['qty']}");
+
       if (existIndex != -1) {
-        // ຖ້າມີແລ້ວອັບເດດ qty
-        // final existing = Map<String, dynamic>.from(cartBox.getAt(existIndex)!);
-        print("=====>${existing['qty']}");
-        existing['qty'] = (existing['qty'] ?? 0) - 1;
-        final number = int.parse(existing['qty'].toString());
-        if (number > 0) {
-          print("====>Delete");
+        final existing = Map<String, dynamic>.from(cartBox.getAt(existIndex)!);
+
+        int qty = (existing['qty'] ?? 0);
+
+        if (qty > 1) {
+          // ຖ້າຍັງເຫຼືອຫຼາຍກວ່າ 1 ກໍ່ຫັກອອກ 1
+          existing['qty'] = qty - 1;
+          await cartBox.putAt(existIndex, existing);
+        } else {
+          // ຖ້າເຫຼືອ 1 ກໍ່ລົບອອກເລີຍ
           await cartBox.deleteAt(existIndex);
         }
-        await cartBox.putAt(existIndex, existing);
+
         return true;
       } else {
-        print("====>Faild");
+        print("====> Not found in cart");
         return false;
       }
     } catch (e) {
+      print("Error in removeCart: $e");
       return false;
     }
   }
@@ -103,6 +145,30 @@ class HiveDatabase {
           'price': cart['price'],
         });
       }
+
+      return true;
+    } catch (e) {
+      print("SaveCart Error: $e");
+      return false;
+    }
+  }
+
+  static Future<bool> saveProfile({required String profile}) async {
+    try {
+      final cartBox = await box!.openBox<Map>("auth");
+    
+      await cartBox.put("profile", {"data": profile});
+
+      return true;
+    } catch (e) {
+      print("SaveCart Error: $e");
+      return false;
+    }
+  }
+    static Future<bool> saveAddress({required String address}) async {
+    try {
+      final cartBox = await box!.openBox<Map>("auth");
+      await cartBox.put("address", {"data": address});
 
       return true;
     } catch (e) {

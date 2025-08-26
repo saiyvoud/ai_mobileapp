@@ -1,9 +1,27 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:ai_mobile/api/apiPath.dart';
+import 'package:ai_mobile/components/hive_database.dart';
 import 'package:http/http.dart' as http;
 
 class AuthApi {
+   static Future<dynamic> getProfile() async {
+    try {
+      //final header = {"content-type": "application/json"};
+   
+      final result = await HiveDatabase.getProfile();
+      if (result != null) {
+       
+        return result;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
   static Future<bool> Login({
     required String phoneNumber,
     required String password,
@@ -14,7 +32,11 @@ class AuthApi {
       final url = Uri.parse(ApiPath.login);
       final respose = await http.post(url, body: body);
       print(respose.body);
+      final data = jsonDecode(respose.body);
       if (respose.statusCode == 200) {
+        await HiveDatabase.deleteToken();
+        await HiveDatabase.saveToken(token: data['data']['token'], refresh: data['data']['refreshToken']);
+        await HiveDatabase.saveProfile(profile: jsonEncode(data['data']));
         return true;
       } else {
         return false;

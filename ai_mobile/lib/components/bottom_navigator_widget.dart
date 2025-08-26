@@ -42,7 +42,7 @@ class _BottomNavigatorWidgetState extends State<BottomNavigatorWidget> {
           ),
           BottomNavigationBarItem(
             icon: Icon(LucideIcons.ticketPercent),
-            label: 'Promotion',
+            label: 'Order',
           ),
           BottomNavigationBarItem(
             icon: Icon(LucideIcons.heart),

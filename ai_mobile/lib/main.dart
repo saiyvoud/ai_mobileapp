@@ -25,7 +25,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()..getProfile()),
         ChangeNotifierProvider(create: (_) => BannerProvider()..getBanner()),
         ChangeNotifierProvider(
           create: (_) => CategoryProvider()..getCategory(),
@@ -36,7 +36,7 @@ void main() async {
       child: MyApp(),
     ),
   );
-} //wifi midi technology password   MD123456789
+} 
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

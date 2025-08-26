@@ -12,6 +12,28 @@ class AuthProvider extends ChangeNotifier {
   // ຕົວປ່ຽນທີ່ເອີ້ນອອກໄປໃສ່ຫນ້າອື່ນໄດ້
   bool get loading => _loading;
   dynamic get user => _user;
+  Future<void> getProfile() async {
+    _loading = true;
+  
+    try {
+      await Future.delayed(Duration(seconds: 1));
+      final result = await AuthApi.getProfile();
+      if (result != null) {
+        _loading = false;
+        _user = result;
+
+        notifyListeners();
+      } else {
+        _loading = false;
+        MessageHelper.showMessage(false, "Bad Request");
+        notifyListeners();
+      }
+    } catch (e) {
+      _loading = false;
+      MessageHelper.showMessage(false, "Error get profile");
+      notifyListeners();
+    }
+  }
 
   Future<void> login({
     required String phoneNumber,
