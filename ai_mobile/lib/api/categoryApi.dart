@@ -8,7 +8,7 @@ class CategoryApi {
     try {
       final url = Uri.parse(ApiPath.getCategoryAll);
       final respose = await http.get(url);
-      print(respose.body);
+     
       if (respose.statusCode == 200) {
         final data = jsonDecode(respose.body);
         return data['data'];

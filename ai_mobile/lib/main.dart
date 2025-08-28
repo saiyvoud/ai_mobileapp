@@ -3,10 +3,12 @@ import 'package:ai_mobile/components/messageHepler.dart';
 import 'package:ai_mobile/page/auth/login_page.dart';
 import 'package:ai_mobile/page/cart/cart_page.dart';
 import 'package:ai_mobile/page/homework/widget/bottomHomwork.dart';
+import 'package:ai_mobile/provider/address_provider.dart';
 import 'package:ai_mobile/provider/auth_provider.dart';
 import 'package:ai_mobile/provider/banner_provider.dart';
 import 'package:ai_mobile/provider/cart_provider.dart';
 import 'package:ai_mobile/provider/category_provider.dart';
+import 'package:ai_mobile/provider/order_provider.dart';
 import 'package:ai_mobile/provider/product_provider.dart';
 import 'package:ai_mobile/router/router.dart';
 
@@ -32,6 +34,8 @@ void main() async {
         ),
         ChangeNotifierProvider(create: (_) => ProductProvider()..getProduct()),
         ChangeNotifierProvider(create: (_) => CartProvider()..getCart()),
+        ChangeNotifierProvider(create: (_) => AddressProvider()),
+        ChangeNotifierProvider(create: (_) => OrderProvider()),
       ],
       child: MyApp(),
     ),

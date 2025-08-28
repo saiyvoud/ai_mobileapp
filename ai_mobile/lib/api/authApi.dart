@@ -31,7 +31,7 @@ class AuthApi {
       final body = {"phoneNumber": phoneNumber, "password": password};
       final url = Uri.parse(ApiPath.login);
       final respose = await http.post(url, body: body);
-      print(respose.body);
+    
       final data = jsonDecode(respose.body);
       if (respose.statusCode == 200) {
         await HiveDatabase.deleteToken();
@@ -63,7 +63,7 @@ class AuthApi {
       };
       final url = Uri.parse(ApiPath.register);
       final respose = await http.post(url, body: body);
-      print("=====>${respose.body}");
+     
       if (respose.statusCode == 200) {
         return true;
       } else {

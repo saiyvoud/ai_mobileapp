@@ -14,10 +14,7 @@ class AddressApi {
   }) async {
     try {
       final token = await HiveDatabase.getToken();
-      final header = {
-        "content-type": "application/json",
-        "Authorization": "Bearer ${token['token']}",
-      };
+      final header = {"Authorization": "Bearer ${token['token']}"};
       final body = {
         "express": express,
 
@@ -102,15 +99,13 @@ class AddressApi {
   static Future<List<dynamic>?> getAddresUser() async {
     try {
       final token = await HiveDatabase.getToken();
-      final user = await HiveDatabase.getProfile();
-      final header = {
-        "content-type": "application/json",
-        "Authorization": "Bearer ${token['token']}",
-      };
 
-      final url = Uri.parse(ApiPath.getAddressByUser + user['_id']);
+      final header = {"Authorization": "Bearer ${token['token']}"};
+
+      final url = Uri.parse(ApiPath.getAddressByUser);
       final respose = await http.get(url, headers: header);
       final data = jsonDecode(respose.body);
+    
       if (respose.statusCode == 200) {
         return data['data'];
       } else {

@@ -16,14 +16,18 @@ class ApiPath {
   //------- delivery ------
   static const String createDelivery = "${baseUrl}/delivery/create";
   //----- order ----
-  static const String createOrder = "${baseUrl}/order/create";
-  static const String createOrderDetail = "${baseUrl}/orderDetail/create";
-  static const String getOrderDetailByOrder = "${baseUrl}/orderDetail/order/";
+  static const String createOrder = "${baseUrl}/order/insert";
   static const String getOrderByUser = "${baseUrl}/order/user";
+  static const String getOrderByStatusAwait =
+      "${baseUrl}/order/getOrderStatusAwait/";
+  static const String getOrderByStatusPadding =
+      "${baseUrl}/order/getOrderStatusPadding/";
+  static const String getOrderByStatusSuccess =
+      "${baseUrl}/order/getOrderStatusSuccess/";
   //----- history ----
   static const String getHistoryByUser = "${baseUrl}/history/user/";
   // ----- address ---
-  static const String createAddress = "${baseUrl}/address/create";
+  static const String createAddress = "${baseUrl}/address/insert";
   static const String updateAddress = "${baseUrl}/address/update/";
   static const String deleteAddress = "${baseUrl}/address/delete/";
   static const String getAddressByUser = "${baseUrl}/address/getByUser";

@@ -1,5 +1,6 @@
 import 'package:ai_mobile/page/cart/cart_page.dart';
 import 'package:ai_mobile/page/home_page.dart';
+import 'package:ai_mobile/page/order/myOrder.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
@@ -15,7 +16,7 @@ class _BottomNavigatorWidgetState extends State<BottomNavigatorWidget> {
   List<Widget> children = [
     HomePage(),
     CartPage(),
-    HomePage(),
+    MyOrder(),
     HomePage(),
     HomePage(),
   ];

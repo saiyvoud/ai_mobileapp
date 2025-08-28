@@ -1,7 +1,10 @@
+import 'package:ai_mobile/components/hive_database.dart';
 import 'package:ai_mobile/page/address/address_page.dart';
 import 'package:ai_mobile/provider/auth_provider.dart';
 import 'package:ai_mobile/provider/cart_provider.dart';
+import 'package:ai_mobile/router/router.dart';
 import 'package:flutter/material.dart';
+import 'package:nav_service/nav_service.dart';
 import 'package:provider/provider.dart';
 
 class BillPage extends StatefulWidget {
@@ -31,23 +34,35 @@ class _BillPageState extends State<BillPage> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 40, right: 20, left: 20),
-        child: Container(
-          height: 50,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Center(
-            child: Text(
-              "ສຳເລັດ",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
+        child: Consumer<CartProvider>(
+          builder: (context,cart,child) {
+            return GestureDetector(
+              onTap: ()async{
+                await HiveDatabase.deleteCartsAll();
+                cart.getCart();
+                NavService.pushReplacementNamed(RouterPath.bottomBar);
+                
+              },
+              child: Container(
+                height: 50,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text(
+                    "ສຳເລັດ",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
+            );
+          }
         ),
       ),
       body: Consumer<CartProvider>(
@@ -134,17 +149,7 @@ class _BillPageState extends State<BillPage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AddressPage(),
-                                ),
-                              );
-                            },
-                            icon: Icon(Icons.add),
-                          ),
+                         
                         ],
                       ),
                       Padding(

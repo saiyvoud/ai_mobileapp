@@ -35,12 +35,7 @@ class HiveDatabase {
     return true;
   }
 
-  static Future<dynamic> getAddress() async {
-    final userBox = await box!.openBox<Map>('auth');
-    final data = await userBox.getAll(['tokens']);
 
-    return data[0];
-  }
 
   static Future<dynamic> getToken() async {
     final userBox = await box!.openBox<Map>('auth');
@@ -67,7 +62,13 @@ class HiveDatabase {
     print("====>${respone}");
     return respone;
   }
-
+    static Future<dynamic> getAddress() async {
+    final userBox = await box!.openBox<Map>('auth');
+    final data = await userBox.getAll(['address']);
+    final respone = jsonDecode(data[0]!['data']);
+    print("====>${respone}");
+    return respone;
+  }
   static Future<List<dynamic>?> getCarts() async {
     try {
       final cartBox = await Hive.openBox<Map>("cart");
